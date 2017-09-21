@@ -1,0 +1,15 @@
+<form (ngSubmit)="onSubmitRegister(registerForm)" #registerForm="ngForm">
+  <fieldset>
+    <legend>Register</legend>
+    <div>
+      <label for="username">Username: </label>
+      <input type="text" name="username" [(ngModel)]="user.username" required>
+    </div>
+    <div>
+      <label for="username">Password: </label>
+      <input type="password" name="password" [(ngModel)]="user.password" required>
+    </div>
+    <button type="submit" [disabled]="!registerForm.valid">Register</button>
+    <p class="error" *ngIf="error">{{ error }}</p>    
+  </fieldset>
+</form>
