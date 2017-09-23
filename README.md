@@ -11,9 +11,12 @@ A Matching app for gamers!
                  |^ ^ ^ ^ |W|   |/^^\ |   /oo |
                   \m___m__|_|    \m_m_|   \mm_|
                   
- #Next Features:
+ # Next Features:
  
  -GeoLoc for users
+ 
  -Matching Algorithm
+ 
  -Likes & Dislikes addition to user Schema
+ 
  -Logout, like & dislike endpoints.
