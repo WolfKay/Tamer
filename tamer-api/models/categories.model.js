@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10; 
 
-const userSchema = new mongoose.Schema({
+const categoriesSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
@@ -40,21 +40,9 @@ const userSchema = new mongoose.Schema({
     }
   ]
 
-  // location: [
-  //   {
-  //     type: String,
-  //     unique: true,
-  //     required: "Select your location"
-  //   }
-  // ],
-
-  // like: [{}],
-
-  // dislike: [{}]
-
 }, {timestamps: true});
 
-userSchema.pre("save", function save(next) {
+categoriesSchema.pre("save", function save(next) {
   const user = this;
   if (!user.isModified("password")) {
     return next();
@@ -74,11 +62,11 @@ userSchema.pre("save", function save(next) {
   });
 });
 
-userSchema.methods.checkPassword = function (password, cb) {
+categoriesSchema.methods.checkPassword = function (password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
     cb(err, isMatch);
   });
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("Categories", categoriesSchema);
 module.exports = User;
