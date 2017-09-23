@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     required: "The password is required"
   },
 
-  userName: {
+  alias: {
     type: String,
     unique: true
   },
@@ -23,16 +23,22 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
 
-  sex: {
-    type: Number,
-    unique: true
-  },
+  sex: [
+    {
+      type: String,
+      enum: ["M", "F"],
+      unique: true
+    }
+  ],
 
-  interests: {
-    type: Array,
-    required: "Please ad one Category minimum"
-
-  }
+  looksFor: [
+    {
+      type: String,
+      enum: ["M", "F", "BOTH"],
+      unique: true
+  
+    }
+  ]
 
 }, {timestamps: true});
 

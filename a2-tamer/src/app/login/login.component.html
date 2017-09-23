@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmitLogin(loginForm)" #loginForm="ngForm">
   <fieldset>
-    <legend>Login</legend>
+    <legend>Login to tamer<3</legend>
     <div>
       <label for="username">Username: </label>
       <input type="text" name="username" [(ngModel)]="user.username" required>
@@ -10,6 +10,10 @@
       <input type="password" name="password" [(ngModel)]="user.password" required>
     </div>
     <button type="submit" [disabled]="!loginForm.valid">Login</button>
+    <div>
+      <p class="goToLogin"> Don't have an account?</p>
+      <button (click)="logout()">Sign up!</button>
+    </div>
     <p class="error" *ngIf="error">{{ error }}</p>
   </fieldset>
 </form>
