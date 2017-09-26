@@ -1,19 +1,33 @@
 const express = require("express");
 const User = require("../models/user.model");
+const passport = require("passport");
 
-module.exports.get = (req, res, next) => {
-
-};
-
-module.exports.edit = (req, res, next) => {
-  
-};
 
 module.exports.register = (req, res, next) => {
-  User.create(req.user)
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+    age: req.body.age,
+    gender: req.body.gender,
+    pref: req.body.pref
+  });
+
+  User.create(user)
   .then( user => res.status(201).json(user))
   .catch(err => next(err));
 };
+
+
+
+
+module.exports.edit = (req, res, next) => {
+
+  User.findByIdAndUpdate( req.user._id, { $set: req.body}, { new: true})
+  .then( user => res.status(201).json(user))
+  .catch(err => next(err));
+};
+
+
 
 // module.exports.like = (req, res, next) => {
 //   User.create(req.user)
