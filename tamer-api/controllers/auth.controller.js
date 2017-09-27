@@ -7,6 +7,7 @@ const passport = require("passport");
 module.exports.Login = (req, res, next) =>  {
   const email = req.body.email;
   const password = req.body.password;
+  
     
   if (!email || !password) {
     return res.status(400).json({ message: "email and password are required" });
@@ -33,4 +34,11 @@ module.exports.Logout = (req, res, next) => {
     if (err) { return next(err); }
     return res.status(204).send();
   });
+};
+
+module.exports.delete = (req, res, next) => {
+
+  User.findByIdAndRemove( req.user._id )
+.then( user => res.status(201).json("Your account has been deleted"))
+.catch(err => next(err));
 };
