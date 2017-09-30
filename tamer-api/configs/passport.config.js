@@ -18,21 +18,23 @@ module.exports.setup = (passport) => {
     usernameField: "email",
     passwordField: "password",
   }, function (email, password, next) {
-    User.findOne({ email: email }, (err, user) => {
-      if (err) { return next(err);
-      } else if (!user) {
-        return next(err, false, { message: "Invalid email or password" });
-      } else {
-        user.checkPassword(password, (err, isMatch) => {
-          if (err) { return next(err); }
-          else if (isMatch) {
-            return next(null, user);
-          } else {
-            return next(err, false, { message: "Invalid email or password" });
-          }
-        });
-      }
-    });
+    User.findOne({ email: email})
+      .populate("match")
+      .then(user => {
+        if (!user) {
+          next(null, false, { message: "Invalid email or password" });
+        } else {
+          user.checkPassword(password, (err, isMatch) => {
+            if (err) { return next(err); }
+            else if (isMatch) {
+              return next(null, user);
+            } else {
+              return next(err, false, { message: "Invalid email or password" });
+            }
+          });
+        }
+      })
+      .catch(err => next(err, false, { message: "Invalid email or password" }));
   }));
 };
 

@@ -48,7 +48,12 @@ const userSchema = new mongoose.Schema({
   dislike: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
-  }]
+  }],
+  
+  match: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
 
 }, {timestamps: true});
 
