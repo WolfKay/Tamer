@@ -4,12 +4,12 @@ const passport = require("passport");
 
 const userController = require("../controllers/user.controller");
 
-router.post("/user/register", userController.register);
+router.post("/user", userController.register);
+router.put("/user", userController.edit);
+router.get("/user/recs", userController.recs);
 
-router.put("/user/edit", userController.edit);
-// router.get("/user/recs", userController.recs);
+router.post("/user/like/:id", userController.like);
+router.post("/user/dislike/:id", userController.like);
 
-// router.post("/", userController.like);
-// router.post("/", userController.dislike);
 
 module.exports = router;

@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10; 
 
-const GENDERS = ["M", "F"];
-const PREFERENCE = ["M", "F", "BI"];
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -15,6 +13,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: "The password is required"
   },
+
+  alias: {
+    type: String,
+  },
+
   age: {
     type: Number,
     required: "Age is required"
@@ -22,19 +25,30 @@ const userSchema = new mongoose.Schema({
 
   gender: {
     type: String,
-    enum: GENDERS,
+    enum: ["M", "F"],
     required: "Gender is required"
   },
 
   pref: {
     type: String,
-    enum: PREFERENCE,
+    enum: ["M", "F", "BOTH"],
     required: "State your preference"
   },
 
-  like: [{}],
+  categories: {
+    type: String,
+    enum: ["PS4", "PC", "BOARD GAMES", "NINTENDO"]
+  },
 
-  dislike: [{}]
+  like: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+
+  dislike: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }]
 
 }, {timestamps: true});
 

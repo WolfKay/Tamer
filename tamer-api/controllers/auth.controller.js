@@ -20,7 +20,7 @@ module.exports.Login = (req, res, next) =>  {
         req.login(user, (err) => {
           if (err) { return next(err); }
           else {
-            return res.status(200).json(req.user);
+            return res.status(200).json( "Welcome back! " + `${user.alias}`);
           }
         });
       }
