@@ -15,8 +15,4 @@ A Matching app for gamers!
  
  -GeoLoc for users
  
- -Matching Algorithm
- 
- -Likes & Dislikes addition to user Schema
- 
- -Logout, like & dislike endpoints.
+ -Chat Services
