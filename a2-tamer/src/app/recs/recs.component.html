@@ -2,15 +2,13 @@
 <div class="container">
 	<div class="row">
 		<div class="col-lg-3 col-sm-6">
-
             <div class="card hovercard">
-               
                 <div class="avatar">
                     <img alt="" src="http://i2.listal.com/image/1876537/936full-alexandra-daddario.jpg">
                 </div>
                 <div class="info">
                     <div class="title">
-                        Alessandra Daddairo
+                        {{ showedUser?.alias }}
                     </div>
                     <div class="desc">Looking for: Friends, possible mate</div>
                     <div class="desc">One liner:Aspiring actress, Develops secretly at night</div>
@@ -23,8 +21,8 @@
                   <div class="btn cat">PC Games</div>
                 </div>
                 <div class="silenole">
-                  <a [routerLink]="['/recs']"><button type="button" class="btn btn-lg btn-danger">Find people</button></a>
-                
+                  <button type="button" class="btn btn-lg btn-danger" (click)="onClickPass()" [disabled]="!showedUser">Pass</button>
+                  <button type="button" class="btn btn-lg btn-success" (click)="onClickFriend()" [disabled]="!showedUser">Friend</button>
                 </div>
             </div>
 
