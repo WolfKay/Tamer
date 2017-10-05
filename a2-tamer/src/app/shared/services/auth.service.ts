@@ -1,48 +1,57 @@
 import { User } from './../models/user.model';
+import { BaseApiService } from './base-api.service';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
-export class AuthService {
-  private baseUrl = 'http://localhost:3000/api';
-  private headers = new Headers({ 'Content-Type': 'application/json' });
-  private options = new RequestOptions({ headers: this.headers, withCredentials: true });
+export class AuthService extends BaseApiService {
+  private static baseUrl = `${BaseApiService.baseApi}/user`;
+  private user: User;
 
-  constructor(private http: Http) {}
-
-  login(user: User): Observable<User> {
-    const data: Object = {
-      username: user.username,
-      password: user.password
-    };
-    return this.http.post(`${this.baseUrl}/login`, JSON.stringify(data), this.options)
-      .map((res: Response) => res.json())
-      .catch(this.handleError);
+  constructor(private http: Http) {
+    super();
+    this.user = JSON.parse(localStorage.getItem('currentUser'));    
   }
 
-  register(user: User): Observable<User> {
-    const data: Object = {
-      username: user.username,
-      password: user.password
-    };
-    return this.http.post(`${this.baseUrl}/register`, JSON.stringify(data), this.options)
+  isAuthenticated(): boolean {
+    return this.user !== undefined;
+  }
+
+  authenticate(user: User): User {
+    this.user = user;
+    localStorage.setItem('currentUser', JSON.stringify(this.user));
+    return this.user;
+  }
+
+  getCurrentUser(): User {
+    return this.user;
+  }
+
+  deAutenticate(): void {
+    this.user = undefined;
+    localStorage.removeItem('currentUser');    
+  }
+
+  login(user: User): Observable<User> {
+    return this.http.post(`${AuthService.baseUrl}/login`, JSON.stringify(user), BaseApiService.defaultOptions)
+      .map((res: Response) => this.authenticate(res.json()))
+      .catch(super.handleError);
+  }
+
+  register(user): Observable<User> {
+    return this.http.post(AuthService.baseUrl, JSON.stringify(user), BaseApiService.defaultOptions)
       .map((res: Response) => res.json())
-      .catch(this.handleError);
+      .catch(super.handleError);
   }
 
   logout(): Observable<boolean | string> {
-    return this.http.post(`${this.baseUrl}/logout`, null, this.options)
-      .map((res: Response) => res.status === 204 )
-      .catch(this.handleError);
-  }
-
-  private handleError(error: Response | any): Observable<string> {
-    console.error(error);
-    return Observable.throw(error.json().message);
+    return this.http.post(AuthService.baseUrl, null, BaseApiService.defaultOptions)
+      .map((res: Response) => {
+        this.deAutenticate();
+        return res.status === 204
+      })
+      .catch(super.handleError);
   }
 
 }

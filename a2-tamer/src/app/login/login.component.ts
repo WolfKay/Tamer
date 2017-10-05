@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { User } from './../shared/models/user.model';
 import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.user).subscribe(
       (user) => {
         loginForm.reset();
-        this.router.navigate(['/message']);
+        this.router.navigate(['/user']);
       },
       (error) => { this.error = error; }
     );

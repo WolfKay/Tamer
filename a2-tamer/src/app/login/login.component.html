@@ -1,19 +1,22 @@
-<form (ngSubmit)="onSubmitLogin(loginForm)" #loginForm="ngForm">
-  <fieldset>
-    <legend>Login to tamer<3</legend>
-    <div>
-      <label for="username">Username: </label>
-      <input type="text" name="username" [(ngModel)]="user.username" required>
-    </div>
-    <div>
-      <label for="username">Password: </label>
-      <input type="password" name="password" [(ngModel)]="user.password" required>
-    </div>
-    <button type="submit" [disabled]="!loginForm.valid">Login</button>
-    <div>
-      <p class="goToLogin"> Don't have an account?</p>
-      <button (click)="logout()">Sign up!</button>
-    </div>
-    <p class="error" *ngIf="error">{{ error }}</p>
-  </fieldset>
-</form>
+<div class="container">
+    <div class="card card-container">
+        <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form class="form-signin" (ngSubmit)="onSubmitLogin(loginForm)" #loginForm="ngForm" name="loginForm">
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" [(ngModel)]="user.email" name="email" required autofocus>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" [(ngModel)]="user.password" name="password" required>
+            <div id="remember" class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Log in</button>
+        </form><!-- /form -->
+        <a href="#" class="register">
+            Don't have an account?
+        </a>
+        <p class="error" *ngIf="error">{{ error }}</p>
+    </div><!-- /card-container -->
+</div><!-- /container -->

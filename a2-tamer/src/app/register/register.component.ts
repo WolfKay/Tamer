@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../shared/services/auth.service';
 import { User } from './../shared/models/user.model';
 import { Component, OnInit } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-register',
@@ -20,8 +21,7 @@ export class RegisterComponent implements OnInit {
   onSubmitRegister(registerForm): void {
     this.authService.register(this.user).subscribe(
       (user) => {
-        registerForm.reset();
-        this.router.navigate(['/messages']);
+        this.router.navigate(['/user']);
       },
       (error) => { this.error = error; }
     );
